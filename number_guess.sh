@@ -57,4 +57,11 @@ done
 #when guessed print successfull mesage
 echo "You guessed it in $NUMBER_OF_GUESSES tries. The secret number was $N. Nice job!"
 #increment games played
+GAMES_PLAYED=$($PSQL "SELECT games_played FROM usernames WHERE username='$USERNAME'")
 (( GAMES_PLAYED++ )) 
+BEST_GAME=$($PSQL "SELECT best_game FROM usernames WHERE username='$USERNAME'")
+if [[ $BEST_GAME -lt $NUMBER_OF_GUESSES || $BEST_GAME -eq 0 ]]
+then
+    UPDATE_BEST_GAME=$($PSQL "UPDATE usernames SET best_game=$NUMBER_OF_GUESSES WHERE username='$USERNAME'")
+fi
+UPDATE_GAMES_PLAYED=$($PSQL "UPDATE usernames SET games_played=$GAMES_PLAYED WHERE username='$USERNAME'")
