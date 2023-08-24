@@ -26,22 +26,35 @@ fi
 #Ask for number guess
 echo -e "\nGuess the secret number between 1 and 1000:"
 read GUESS
+NUMBER_OF_GUESSES=0;
 
 #while not a number or not guessed
-while [[ !($GUESS =~ ^[0-9]+$) ]]
+while [[ !($GUESS =~ ^[0-9]+$) || $GUESS -ne $N ]]
 do
-    #increment times_guessed
-    #if input is higher print lower message
-    #if input is lower print higher message
     #if not a number
     if [[ !($GUESS =~ ^[0-9]+$) ]]
     then
         #print ask for number
         echo That is not an integer, guess again:
         read GUESS
+    else
+        #increment times_guessed
+        (( NUMBER_OF_GUESSES++ ))
+        #if input is higher print lower message
+        if [[ $GUESS -gt $N ]]
+        then
+            echo "It's lower than that, guess again:"
+            read GUESS
+        #if input is lower print higher message
+        else
+            echo "It's higher than that, guess again:"
+            read GUESS
+        fi
     fi
-    
 done
-
+#increment the last guess
+(( NUMBER_OF_GUESSES++ ))
 #when guessed print successfull mesage
-#increment games played 
+echo "You guessed it in $NUMBER_OF_GUESSES tries. The secret number was $N. Nice job!"
+#increment games played
+(( GAMES_PLAYED++ )) 
