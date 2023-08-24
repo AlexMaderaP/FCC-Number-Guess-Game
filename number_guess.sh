@@ -23,18 +23,25 @@ else
     echo "Welcome back, $USER! You have played $GAMES_PLAYED games, and your best game took $BEST_GAME guesses.")
 fi
 
-
 #Ask for number guess
-#if not a number
-#print ask for number
-#increment times_guessed
+echo -e "\nGuess the secret number between 1 and 1000:"
+read GUESS
 
-#while not guessed
+#while not a number or not guessed
+while [[ !($GUESS =~ ^[0-9]+$) ]]
+do
     #increment times_guessed
     #if input is higher print lower message
     #if input is lower print higher message
     #if not a number
-    #print ask for number
+    if [[ !($GUESS =~ ^[0-9]+$) ]]
+    then
+        #print ask for number
+        echo That is not an integer, guess again:
+        read GUESS
+    fi
+    
+done
 
 #when guessed print successfull mesage
 #increment games played 
